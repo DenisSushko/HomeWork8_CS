@@ -1,14 +1,10 @@
-﻿// Задача 54: Задайте двумерный массив.
-// Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
-// Например, задан массив:
-// 1 4 7 2
-// 5 9 2 3
-// 8 4 2 4
-// В итоге получается вот такой массив:
-// 7 4 2 1
-// 9 5 3 2
-// 8 4 4 2
-
+﻿// Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
+// Например, даны 2 матрицы:
+// 2 4 | 3 4
+// 3 2 | 3 3
+// Результирующая матрица будет:
+// 18 20
+// 15 18
 
 int[,] createArray(int m, int n)
 {
@@ -18,17 +14,17 @@ int[,] createArray(int m, int n)
     {
         for (int j = 0; j < n; j++)
         {
-            arr[i, j] = rnd.Next(201) - 100;
+            arr[i, j] = rnd.Next(0, 10);
         }
     }
     return arr;
 }
 
-void printArray(int[,] arr, int m, int n)
+void printArray(int[,] arr)
 {
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < arr.GetLength(0); i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < arr.GetLength(1); j++)
         {
             Console.Write(arr[i, j] + " ");
         }
@@ -36,36 +32,45 @@ void printArray(int[,] arr, int m, int n)
     }
 }
 
-int[,] sortArray(int[,] arr, int m, int n)
+int[,] matrixMultiplication(int[,] A, int[,] B)
 {
-    int[,] result = arr;
-    for (int i = 0; i < arr.GetLength(0); i++)
+    int[,] result = new int[A.GetLength(0), B.GetLength(1)];
+    for (int i = 0; i < A.GetLength(0); i++)
     {
-        for (int j = 0; j < arr.GetLength(1) - 1; j++)
+        for (int k = 0; k < B.GetLength(1); k++)
         {
-            for (int q = 0; q < arr.GetLength(1) - 1; q++)
-        {
-            if (arr[i, q] < arr[i, q + 1])
+            int temp = 0;
+            for (int j = 0; j < B.GetLength(0); j++)
             {
-                int temp = 0;
-                temp = arr[i, q];
-                arr[i, q] = arr[i, q + 1];
-                arr[i, q + 1] = temp;
+                temp += A[i, j] * B[j, k];
             }
+            result[i, k] = temp;
         }
     }
+    return result;
 }
-    return arr;
+
+Console.WriteLine("Введите m1: ");
+int m1 = int.Parse(Console.ReadLine()!);
+Console.WriteLine("Введите n1: ");
+int n1 = int.Parse(Console.ReadLine()!);
+Console.WriteLine("Введите m2: ");
+int m2 = int.Parse(Console.ReadLine()!);
+Console.WriteLine("Введите n2: ");
+int n2 = int.Parse(Console.ReadLine()!);
+int[,] arr1 = createArray(m1, n1);
+int[,] arr2 = createArray(m2, n2);
+Console.WriteLine("Матрица A:");
+printArray(arr1);
+Console.WriteLine("Матрица B:");
+printArray(arr2);
+if (arr1.GetLength(1) == arr2.GetLength(0))
+{
+    int[,] arr3 = matrixMultiplication(arr1, arr2);
+    Console.WriteLine("Произведение матриц A и B:");
+    printArray(arr3);
 }
-
-
-Console.WriteLine("Введите m: ");
-int m = int.Parse(Console.ReadLine()!);
-Console.WriteLine("Введите n: ");
-int n = int.Parse(Console.ReadLine()!);
-int[,] arr = createArray(m, n);
-printArray(arr, m, n);
-int[,] sortedArr = sortArray(arr, m, n);
-Console.WriteLine("Отсортированный массив:");
-printArray(sortedArr, m, n);
-
+else
+{
+    Console.WriteLine("Размерности матриц A и B не удовлетворяют условия перемножения матриц");
+}
