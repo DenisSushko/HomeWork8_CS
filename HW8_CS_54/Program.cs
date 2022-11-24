@@ -18,7 +18,7 @@ int[,] createArray(int m, int n)
     {
         for (int j = 0; j < n; j++)
         {
-            arr[i, j] = rnd.Next(201) - 100;
+            arr[i, j] = rnd.Next(0, 10);
         }
     }
     return arr;
