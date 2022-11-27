@@ -9,13 +9,15 @@ int[,,] createArray()
 {
     int[,,] arr = new int[2, 2, 2];
     Random rnd = new Random();
+    int num = rnd.Next(10, 80);
     for (int k = 0; k < 2; k++)
     {
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                arr[i,j,k] = rnd.Next(10, 99);
+                arr[i,j,k] = num;
+                num = num + 2;
             }
         }
     }
